@@ -94,15 +94,17 @@
             fbq('init', '424744653371009');
             fbq('track', 'PageView_Clientes');
 
-            // Função para definir um cookie
-            function setCookie(name, value, days) {
+            // Função para definir um cookie com informações adicionais
+            function setCookieWithProduct(name, product, value, days) {
                 var expires = "";
                 if (days) {
                     var date = new Date();
                     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                     expires = "; expires=" + date.toUTCString();
                 }
-                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                // Adiciona o identificador do produto ao valor do cookie
+                var cookieValue = product + "=" + (value || "");
+                document.cookie = name + "=" + cookieValue + expires + "; path=/";
             }
 
             // Função para obter um cookie
@@ -122,11 +124,11 @@
                 return getCookie('purchaseRegistered') === 'true';
             }
 
-            // Função para registrar a compra
+            // Função para registrar a compra e armazenar o produto no cookie
             function registerPurchase(product) {
                 if (!hasPurchaseBeenRegistered()) {
                     fbq('track', 'Purchase');
-                    setCookie('purchaseRegistered', 'true', 365); // Válido por 1 ano
+                    setCookieWithProduct('purchaseRegistered', product, 'true', 365); // Válido por 1 ano
                 }
             }
 
@@ -147,3 +149,6 @@
     </script>
 </body>
 </html>
+
+
+    
