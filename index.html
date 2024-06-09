@@ -27,7 +27,7 @@
             align-items: center;
         }
         .button {
-            display: block;
+            display: none; /* Inicialmente oculto */
             width: 80%;
             max-width: 250px;
             padding: 15px;
@@ -110,21 +110,30 @@
             return null;
         }    
 
-        // Verifica se o evento de compra já foi registrado para este dispositivo
+        // Verifica se o evento de compra já foi registrado para este produto
+        const product = "Pacote Morango"; // Produto específico
         const purchaseEventRegistered = getCookie('purchaseEventRegistered');
 
-        if (!purchaseEventRegistered) {
+        if (!purchaseEventRegistered || !purchaseEventRegistered.includes(product)) {
+            // Registra o evento de compra
             fbq('track', 'Purchase');
 
-            // Marca o evento de compra como registrado
-            setCookie('purchaseEventRegistered', 'true', 365); // Valido por 1 ano
+            // Marca o evento de compra como registrado para este produto
+            const updatedPurchaseEvent = purchaseEventRegistered ? `${purchaseEventRegistered},${product}` : product;
+            setCookie('purchaseEventRegistered', updatedPurchaseEvent, 365); // Valido por 1 ano
         }
+
+        // Mostra o botão após o carregamento do pixel do Facebook e suas funções
+        fbq('track', 'PixelInitialized', {
+            eventCallback: function() {
+                document.querySelector('.button').style.display = 'block';
+            }
+        });
     </script>
     
     <img src="https://raw.githubusercontent.com/lewerneck/a9fk-morango/7848312f08fd016d26d7430fbbedae63f4e43b3b/d69b4b9b44820c8414c9c24ed6f1fec3.jpeg">
     <div class="custom-text">Letícia Werneck</div>  
     <a id="telegramButton" class="button button-telegram" href="https://photos.app.goo.gl/BoLcV7HoHQYmG38m9">PACOTE MORANGO<br>Acesse aqui!<br></a>
 
-  
 </body>
 </html>
