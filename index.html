@@ -78,7 +78,8 @@
     <div class="custom-text">Letícia Werneck</div>  
     <button class="button button-telegram" id="telegramButton">PACOTE MORANGO<br>Acesse aqui!</button>
 
-       <script>
+    <!-- JavaScript -->
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Pixel do Facebook
             !function(f,b,e,v,n,t,s)
@@ -116,14 +117,16 @@
                 return null;
             }
 
+            // Função para verificar se o evento de compra já foi registrado
+            function hasPurchaseBeenRegistered() {
+                return getCookie('purchaseRegistered') === 'true';
+            }
+
             // Função para registrar a compra
             function registerPurchase(product) {
-                let purchases = getCookie('purchases');
-                purchases = purchases ? JSON.parse(purchases) : {};
-
-                if (!purchases[product]) {
+                if (!hasPurchaseBeenRegistered()) {
                     fbq('track', 'Purchase');
-                    setCookie('purchases', JSON.stringify(purchases), 365); // Válido por 1 ano
+                    setCookie('purchaseRegistered', 'true', 365); // Válido por 1 ano
                 }
             }
 
