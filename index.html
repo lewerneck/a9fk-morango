@@ -41,7 +41,7 @@
             border-radius: 8px;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
-         @keyframes pulse {
+        @keyframes pulse {
             from {
                 transform: scale(1);
             }
@@ -88,44 +88,15 @@
             'https://connect.facebook.net/en_US/fbevents.js');
 
             fbq('init', '424744653371009');
-            fbq('track', 'PageView_Clientes');
-
-            // Função para definir um cookie
-            function setCookie(name, value, days) {
-                var expires = "";
-                if (days) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                    expires = "; expires=" + date.toUTCString();
-                }
-                document.cookie = name + "=" + (value || "") + expires + "; path=/";
-            }
-
-            // Função para obter um cookie
-            function getCookie(name) {
-                var nameEQ = name + "=";
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
-
-            // Verifica se o evento de compra já foi registrado para este dispositivo
-            const purchaseEventRegistered = getCookie('purchaseEventRegistered');
-
-            if (!purchaseEventRegistered) {
-                fbq('track', 'Purchase');
-                setCookie('purchaseEventRegistered', 'true', 365); // Valido por 1 ano
-            }
+            fbq('track', 'Purchase');
 
             // Mostra o botão após o Pixel ser carregado
-            document.getElementById('telegramButton').style.display = 'block';
+            window.fbAsyncInit = function() {
+                document.getElementById('telegramButton').style.display = 'block';
+            };
         });
     </script>
-     <img src="https://raw.githubusercontent.com/lewerneck/a9fk-morango/7848312f08fd016d26d7430fbbedae63f4e43b3b/d69b4b9b44820c8414c9c24ed6f1fec3.jpeg">
+    <img src="https://raw.githubusercontent.com/lewerneck/a9fk-morango/7848312f08fd016d26d7430fbbedae63f4e43b3b/d69b4b9b44820c8414c9c24ed6f1fec3.jpeg">
     <div class="custom-text">Letícia Werneck</div>  
     <a id="telegramButton" class="button button-telegram" href="https://photos.app.goo.gl/BoLcV7HoHQYmG38m9">PACOTE MORANGO<br>Acesse aqui!<br></a>
 
